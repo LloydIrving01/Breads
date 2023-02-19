@@ -45,5 +45,10 @@ breads.post('/', (req, res) => {
     res.redirect('/breads')
   })
   
+// Delete
+breads.delete('/:indexArray', (req, res) => {
+  Bread.splice(req.params.indexArray, 1)
+  res.status(303).redirect('/breads')
+})
 
 module.exports = breads

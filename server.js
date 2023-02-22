@@ -1,7 +1,8 @@
 // DEPENDENCIES
 const express = require('express')
-const mongoose = require('mongoose')
 const methodOverride = require('method-override')
+const mongoose = require('mongoose')
+
 
 // CONFIGURATION
 require('dotenv').config()
@@ -16,6 +17,11 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 
+// Connect Mongoose
+mongoose.set('strictQuery', true)
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true}, 
+  () => { console.log('connected to mongo: ', process.env.MONGO_URI) }
+)
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -36,3 +42,8 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log('listening on port', PORT);
 })
+
+// mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true}, 
+//   () => { console.log('connected to mongo: ', process.env.MONGO_URI) }
+// )
+// mongoose.set('strictQuery', true);
